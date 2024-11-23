@@ -211,6 +211,18 @@ public class ControllerHandler implements InputManager.InputDeviceListener, UsbD
         // Register ourselves for input device notifications
         inputManager.registerInputDeviceListener(this, null);
     }
+    public void onGyro(short x, short y, short z) {
+        //defaultContext.rightStickX = (short) Math.max(Math.min(x*1000, 32000), -32000);
+        //defaultContext.rightStickY = (short) Math.max(Math.min(-y*1000, 32000), -32000);
+
+        //sendControllerInputPacket(defaultContext);
+        conn.sendControllerMotionEvent((byte) defaultContext.controllerNumber,
+                MoonBridge.LI_MOTION_TYPE_GYRO,
+                -y,
+                -x,
+                z);
+    }
+
 
     private static InputDevice.MotionRange getMotionRangeForJoystickAxis(InputDevice dev, int axis) {
         InputDevice.MotionRange range;
